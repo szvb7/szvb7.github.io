@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Документа Стамбене заједнице Владислава Бајчевића 7.">
     <title>Документа – СЗ Владислава Бајчевића 7</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
-        <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+    <div class="container header-content">
+        <img src="logo.svg" alt="Логотип СЗ Владислава Бајчевића 7" class="logo">
+        <div class="header-text">
+            <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
+            <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+        </div>
     </div>
 </header>
 
@@ -32,99 +37,170 @@
 
     <h2 class="section-title">Документа</h2>
 
-    <section class="info-box">
-        <h2>Решења регистратора</h2>
-        <p>Званична решења о упису Стамбене заједнице у Јединствену евиденцију стамбених заједница, која води Републички геодетски завод:</p>
-        <ul class="doc-list">
-            <li>
-                <a href="dokumenti/resenje-registratora-2024-03-26.pdf" target="_blank" rel="noopener">
-                    Решење регистратора, број 360-221/2024
-                </a>
-                <span class="doc-meta">објављено 26.03.2024.</span>
-            </li>
-            <li>
-                <a href="dokumenti/resenje-registratora-2022-01-28.pdf" target="_blank" rel="noopener">
-                    Решење регистратора, број 360-27/2022
-                </a>
-                <span class="doc-meta">објављено 28.01.2022.</span>
-            </li>
-            <li>
-                <a href="dokumenti/resenje-registratora-2017-12-04.pdf" target="_blank" rel="noopener">
-                    Решење регистратора, број 360-500/2017
-                </a>
-                <span class="doc-meta">објављено 04.12.2017.</span>
-            </li>
-        </ul>
-        <p class="napomena">Сва решења су доступна и на <a href="https://katastar.rgz.gov.rs/StambeneZajednice/" target="_blank" rel="noopener">порталу РГЗ-а</a>, у табу „Одлуке регистратора“.</p>
-    </section>
-
-    <section class="info-box">
-        <h2>Општа документа</h2>
-        <ul class="doc-list">
-            <li>
-                <a href="dokumenti/zakon-o-stanovanju.pdf" target="_blank" rel="noopener">
-                    Закон о становању и одржавању зграда
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-            <li>
-                <a href="dokumenti/odluka-o-odrzavanju.pdf" target="_blank" rel="noopener">
-                    Одлука о одржавању зграде
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-            <li>
-                <a href="dokumenti/plan-odrzavanja-2026.pdf" target="_blank" rel="noopener">
-                    План одржавања за 2026. годину
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-        </ul>
-    </section>
-
-    <section class="info-box">
-        <h2>Записници са скупштина станара</h2>
-        <ul class="doc-list">
-            <li>
-                <a href="dokumenti/zapisnik-2026-10-10.pdf" target="_blank" rel="noopener">
-                    Записник са скупштине од 10.10.2026.
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-            <li>
-                <a href="dokumenti/zapisnik-2026-04-15.pdf" target="_blank" rel="noopener">
-                    Записник са скупштине од 15.04.2026.
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-        </ul>
-        <p class="napomena">Записнике са скупштина чува управник и могу се добити на увид на захтев.</p>
-    </section>
-
-    <section class="info-box">
-        <h2>Финансијски извештаји</h2>
-        <ul class="doc-list">
-            <li>
-                <a href="dokumenti/izvestaj-2025.pdf" target="_blank" rel="noopener">
-                    Годишњи финансијски извештај за 2025. годину
-                </a>
-                <span class="doc-meta">PDF</span>
-            </li>
-        </ul>
-    </section>
-
-    <p class="napomena">
-        <em>Напомена: PDF фајлове постављајте у фасциклу <code>dokumenti/</code>. Ако документ још није постављен, линк ће приказати грешку — обришите га из листе док га не додате.</em>
-    </p>
+    <div id="lista-dokumenata">
+        <p class="ucitavanje">Учитавање докумената…</p>
+    </div>
 
 </main>
 
 <footer>
     <div class="container">
-        <p>© 2026 Стамбена заједница Владислава Бајчевића 7.</p>
+        <p>© 2026 Стамбена заједница Владислава Бајчевића 7. Сва права задржана.</p>
         <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
     </div>
 </footer>
+
+<script>
+const GITHUB_REPO = "szvb7/szvb7.github.io";
+const GITHUB_BRANCH = "main";
+const CONTENT_FOLDER = "content/dokumenti";
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('lista-dokumenata');
+    if (!container) return;
+
+    try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${CONTENT_FOLDER}?ref=${GITHUB_BRANCH}`;
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема докумената.</p>';
+            return;
+        }
+
+        const fajlovi = await response.json();
+        const mdFajlovi = fajlovi.filter(f => f.name.endsWith('.md'));
+
+        if (mdFajlovi.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема докумената.</p>';
+            return;
+        }
+
+        const dokumenti = [];
+
+        for (const fajl of mdFajlovi) {
+            try {
+                const rawResponse = await fetch(fajl.download_url);
+                const tekst = await rawResponse.text();
+                const parsed = parsirajMarkdown(tekst);
+                if (parsed && parsed.naslov) {
+                    dokumenti.push(parsed);
+                }
+            } catch (err) {
+                console.error(`Грешка при учитавању ${fajl.name}:`, err);
+            }
+        }
+
+        if (dokumenti.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема докумената.</p>';
+            return;
+        }
+
+        // Grupisanje po kategorijama
+        const kategorije = [
+            "Решења регистратора",
+            "Општа документа",
+            "Записници са скупштина",
+            "Финансијски извештаји",
+            "Остало"
+        ];
+
+        const grupisano = {};
+        kategorije.forEach(k => grupisano[k] = []);
+
+        dokumenti.forEach(d => {
+            const kat = d.kategorija && grupisano[d.kategorija] ? d.kategorija : "Остало";
+            grupisano[kat].push(d);
+        });
+
+        // Sortiranje unutar kategorija (najnovije prvo)
+        Object.values(grupisano).forEach(lista => {
+            lista.sort((a, b) => {
+                const da = new Date(a.datum || 0);
+                const db = new Date(b.datum || 0);
+                return db - da;
+            });
+        });
+
+        // Prikaz
+        container.innerHTML = '';
+
+        kategorije.forEach(kat => {
+            if (grupisano[kat].length === 0) return;
+
+            const sekcija = document.createElement('section');
+            sekcija.className = 'info-box';
+
+            const naslov = document.createElement('h2');
+            naslov.textContent = kat;
+            sekcija.appendChild(naslov);
+
+            const lista = document.createElement('ul');
+            lista.className = 'doc-list';
+
+            grupisano[kat].forEach(dok => {
+                const li = document.createElement('li');
+
+                const link = document.createElement('a');
+                
+                // Provera i ispravka putanje do PDF fajla
+                let putanja = dok.fajl || '#';
+                if (putanja !== '#' && !putanja.startsWith('/') && !putanja.startsWith('http')) {
+                    putanja = '/' + putanja;
+                }
+                link.href = putanja;
+                
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.textContent = dok.naslov;
+
+                const meta = document.createElement('span');
+                meta.className = 'doc-meta';
+                if (dok.napomena) {
+                    meta.textContent = dok.napomena;
+                } else if (dok.datum) {
+                    meta.textContent = new Date(dok.datum).toLocaleDateString('sr-RS', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                    });
+                } else {
+                    meta.textContent = 'PDF';
+                }
+
+                li.appendChild(link);
+                li.appendChild(meta);
+                lista.appendChild(li);
+            });
+
+            sekcija.appendChild(lista);
+            container.appendChild(sekcija);
+        });
+
+    } catch (error) {
+        console.error('Грешка при учитавању докумената:', error);
+        container.innerHTML = '<p class="ucitavanje">Тренутно није могуће учитати докумената. Покушајте касније.</p>';
+    }
+});
+
+function parsirajMarkdown(tekst) {
+    const match = tekst.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    if (!match) return null;
+
+    const meta = match[1];
+
+    return {
+        naslov: izvuci(meta, 'title'),
+        kategorija: izvuci(meta, 'kategorija'),
+        datum: izvuci(meta, 'date'),
+        fajl: izvuci(meta, 'fajl'),
+        napomena: izvuci(meta, 'napomena')
+    };
+}
+
+function izvuci(meta, polje) {
+    const m = meta.match(new RegExp('^' + polje + ':\\s*["\']?(.*?)["\']?\\s*$', 'm'));
+    return m ? m[1] : null;
+}
+</script>
 
 </body>
 </html>
