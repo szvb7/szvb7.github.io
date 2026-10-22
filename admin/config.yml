@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: vasko-ime/sz-vladislava-bajcevica-7 # ZAMENITE sa vašim GitHub username/repo
+  repo: szvb7/szvb7.github.io
   branch: main
 
 media_folder: "slike" # Gde se čuvaju slike otpremljene kroz CMS
