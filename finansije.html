@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Финансије – СЗ Владислава Бајчевића 7</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
-        <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+    <div class="container header-content">
+        <img src="logo.svg" alt="Логотип СЗ Владислава Бајчевића 7" class="logo">
+        <div class="header-text">
+            <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
+            <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+        </div>
     </div>
 </header>
 
@@ -32,115 +36,128 @@
 
     <h2 class="section-title">Финансије стамбене заједнице</h2>
 
-    <section class="info-box">
-        <h2>Месечни приказ прихода и расхода – октобар 2026.</h2>
-        <p>Приказ је информативног карактера и ажурира се месечно. За званичне податке обратите се управнику.</p>
-
-        <div class="table-wrap">
-            <table class="fin">
-                <thead>
-                    <tr>
-                        <th>Опис</th>
-                        <th class="num">Износ (RSD)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" style="background-color:#f2f7f2;font-weight:600;color:#1e4a1f;">ПРИХОДИ</td>
-                    </tr>
-                    <tr>
-                        <td>Месечне уплате станара (49 станова × 600 RSD)</td>
-                        <td class="num">29.400</td>
-                    </tr>
-                    <tr>
-                        <td>Приход од закупца пословног простора (ако постоји)</td>
-                        <td class="num">0</td>
-                    </tr>
-                    <tr>
-                        <td>Остали приходи</td>
-                        <td class="num">0</td>
-                    </tr>
-                    <tr class="total">
-                        <td>Укупно приходи</td>
-                        <td class="num">29.400</td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2" style="background-color:#f2f7f2;font-weight:600;color:#1e4a1f;">РАСХОДИ</td>
-                    </tr>
-                    <tr>
-                        <td>Чишћење заједничких просторија</td>
-                        <td class="num">12.000</td>
-                    </tr>
-                    <tr>
-                        <td>Електрична енергија (заједничка потрошња)</td>
-                        <td class="num">4.800</td>
-                    </tr>
-                    <tr>
-                        <td>Сервис лифта</td>
-                        <td class="num">5.500</td>
-                    </tr>
-                    <tr>
-                        <td>Текуће одржавање (ситне поправке)</td>
-                        <td class="num">3.000</td>
-                    </tr>
-                    <tr>
-                        <td>Остали расходи</td>
-                        <td class="num">1.100</td>
-                    </tr>
-                    <tr class="total">
-                        <td>Укупно расходи</td>
-                        <td class="num">26.400</td>
-                    </tr>
-
-                    <tr class="total">
-                        <td>Салдо за октобар 2026.</td>
-                        <td class="num">+3.000</td>
-                    </tr>
-                    <tr>
-                        <td>Стање на рачуну на почетку месеца</td>
-                        <td class="num">45.000</td>
-                    </tr>
-                    <tr class="total">
-                        <td>Стање на рачуну на крају месеца</td>
-                        <td class="num">48.000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <p class="napomena"><em>Подаци су илустративни. Замените их стварним износима из књиговодства стамбене заједнице.</em></p>
-    </section>
-
-    <section class="info-box">
-        <h2>Како се троши новац од месечних уплата?</h2>
-        <ul>
-            <li>Чишћење и одржавање заједничких просторија</li>
-            <li>Електрична енергија за заједничке просторе (ходници, степениште, лифт)</li>
-            <li>Редовни сервис лифта и хидрантске мреже</li>
-            <li>Текуће поправке (кварови, ситне инвестиције)</li>
-            <li>Формирање резервног фонда за веће поправке</li>
-        </ul>
-    </section>
-
-    <section class="info-box">
-        <h2>Како платити</h2>
-        <ul>
-            <li><strong>Банковни рачун:</strong> <span class="placeholder">[уписати број рачуна, кад се отвори]</span></li>
-            <li><strong>Позив на број:</strong> <span class="placeholder">[број стана]</span></li>
-            <li><strong>Сврха плаћања:</strong> Месечна уплата за стамбену заједницу</li>
-        </ul>
-        <p class="napomena">Уплате се врше до 15. у месецу за претходни месец.</p>
-    </section>
+    <div id="lista-finansija">
+        <p class="ucitavanje">Учитавање финансијских података…</p>
+    </div>
 
 </main>
 
 <footer>
     <div class="container">
-        <p>© 2026 Стамбена заједница Владислава Бајчевића 7.</p>
+        <p>© 2026 Стамбена заједница Владислава Бајчевића 7. Сва права задржана.</p>
         <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
     </div>
 </footer>
+
+<script>
+const GITHUB_REPO = "szvb7/szvb7.github.io";
+const GITHUB_BRANCH = "main";
+const CONTENT_FOLDER = "content/finansije";
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('lista-finansija');
+    if (!container) return;
+
+    try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${CONTENT_FOLDER}?ref=${GITHUB_BRANCH}`;
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема финансијских извештаја.</p>';
+            return;
+        }
+
+        const fajlovi = await response.json();
+        const mdFajlovi = fajlovi.filter(f => f.name.endsWith('.md'));
+
+        if (mdFajlovi.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема финансијских извештаја.</p>';
+            return;
+        }
+
+        const izvestaji = [];
+
+        for (const fajl of mdFajlovi) {
+            const rawResponse = await fetch(fajl.download_url);
+            const tekst = await rawResponse.text();
+            const parsed = parsirajMarkdown(tekst);
+            if (parsed && parsed.naslov) {
+                izvestaji.push(parsed);
+            }
+        }
+
+        if (izvestaji.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема финансијских извештаја.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+
+        izvestaji.forEach(izv => {
+            const sekcija = document.createElement('div');
+            sekcija.className = 'info-box';
+
+            const format = (broj) => {
+                return broj ? Number(broj).toLocaleString('sr-RS') + ' RSD' : '0 RSD';
+            };
+
+            sekcija.innerHTML = `
+                <h2>${escapeHtml(izv.naslov)}</h2>
+                <div class="table-wrap">
+                    <table class="fin">
+                        <tbody>
+                            <tr>
+                                <td>Укупно приходи</td>
+                                <td class="num">${format(izv.prihodi)}</td>
+                            </tr>
+                            <tr>
+                                <td>Укупно расходи</td>
+                                <td class="num">${format(izv.rashodi)}</td>
+                            </tr>
+                            <tr class="total">
+                                <td>Стање на рачуну</td>
+                                <td class="num">${format(izv.stanje)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                ${izv.opis ? `<p class="napomena" style="margin-top:15px;">${escapeHtml(izv.opis)}</p>` : ''}
+            `;
+            container.appendChild(sekcija);
+        });
+
+    } catch (error) {
+        console.error('Greška pri učitavanju finansija:', error);
+        container.innerHTML = '<p class="ucitavanje">Тренутно није могуће учитати финансијске податке. Покушајте касније.</p>';
+    }
+});
+
+function parsirajMarkdown(tekst) {
+    const match = tekst.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    if (!match) return null;
+
+    const meta = match[1];
+    return {
+        naslov: izvuci(meta, 'title'),
+        prihodi: izvuci(meta, 'prihodi'),
+        rashodi: izvuci(meta, 'rashodi'),
+        stanje: izvuci(meta, 'stanje'),
+        opis: izvuci(meta, 'opis')
+    };
+}
+
+function izvuci(meta, polje) {
+    const m = meta.match(new RegExp('^' + polje + ':\\s*["\']?(.*?)["\']?\\s*$', 'm'));
+    return m ? m[1] : null;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
 
 </body>
 </html>
