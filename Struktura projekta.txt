@@ -1,0 +1,19 @@
+sz-vladislava-bajcevica-7/
+├── index.html
+├── o-zgradi.html
+├── obavestenja.html
+├── dokumenta.html
+├── finansije.html
+├── kontakt.html
+├── style.css
+├── README.md
+└── dokumenti/
+    ├── resenje-registratora-2024-03-26.pdf
+    ├── resenje-registratora-2022-01-28.pdf
+    ├── resenje-registratora-2017-12-04.pdf
+    ├── zakon-o-stanovanju.pdf
+    ├── odluka-o-odrzavanju.pdf
+    ├── plan-odrzavanja-2026.pdf
+    ├── zapisnik-2026-10-10.pdf
+    ├── zapisnik-2026-04-15.pdf
+    └── izvestaj-2025.pdf

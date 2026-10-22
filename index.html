@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Званична страница Стамбене заједнице Владислава Бајчевића 7, Београд – Звездара.">
+    <title>Стамбена заједница Владислава Бајчевића 7</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/svg+xml" href="logo.svg">
+</head>
+<body>
+
+<header>
+    <div class="container header-content">
+        <img src="logo.svg" alt="Логотип СЗ Владислава Бајчевића 7" class="logo">
+        <div class="header-text">
+            <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
+            <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="index.html" class="active">Почетна</a></li>
+            <li><a href="o-zgradi.html">О згради</a></li>
+            <li><a href="obavestenja.html">Обавештења</a></li>
+            <li><a href="dokumenta.html">Документа</a></li>
+            <li><a href="finansije.html">Финансије</a></li>
+            <li><a href="kontakt.html">Контакт</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <h2>Добро дошли на званичну страницу наше стамбене заједнице</h2>
+        <p>Овде можете пронаћи најновија обавештења, важне документе, финансијске извештаје и контакт податке управе зграде.</p>
+    </section>
+
+    <section>
+        <h2 class="section-title">Најновија обавештења</h2>
+
+        <section>
+    <h2 class="section-title">Најновија обавештења</h2>
+    <div id="lista-obavestenja"></div>
+    <p class="arhiva-link"><a href="obavestenja.html">Прикажи сва обавештења →</a></p>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('lista-obavestenja');
+    if (!container) return;
+
+    try {
+        // Uzimamo listu fajlova iz fascikle content/obavestenja
+        // Napomena: Ovo je pojednostavljen primer. Za produkciju je bolje koristiti
+        // build proces ili API. Ali za mali broj obaveštenja, možemo ručno da listamo.
+        // Idealno bi bilo koristiti fetch na manifest fajl koji CMS generiše.
+        // Za sada, pretpostavljamo da imamo nekoliko fajlova.
+        // U praksi, bolje je koristiti statički generator (poput Eleventyja) ili
+        // ručno ažurirati listu fajlova u JS-u.
+        
+        // Ovaj deo je najbolje zameniti statičkim generatorom.
+        // Za potrebe ovog vodiča, pretpostavićemo da ste ručno dodali listu fajlova.
+        const fajlovi = [
+            'content/obavestenja/2026-10-15-odrzavanje.md',
+            'content/obavestenja/2026-10-01-skupstina.md'
+        ];
+
+        for (const fajl of fajlovi) {
+            const response = await fetch(fajl);
+            const tekst = await response.text();
+            
+            // Jednostavan parser za Markdown (naslov, datum, telo)
+            const delovi = tekst.split('---');
+            if (delovi.length >= 3) {
+                const meta = delovi[1];
+                const telo = delovi[2].trim();
+                
+                const naslovMatch = meta.match(/title:\s*(.*)/);
+                const datumMatch = meta.match(/date:\s*(.*)/);
+                
+                if (naslovMatch && datumMatch) {
+                    const article = document.createElement('article');
+                    article.className = 'obavestenje';
+                    article.innerHTML = `
+                        <h3>${naslovMatch[1]}</h3>
+                        <p class="datum">${new Date(datumMatch[1]).toLocaleDateString('sr-RS')}</p>
+                        <p>${telo.substring(0, 200)}...</p>
+                    `;
+                    container.appendChild(article);
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Greška pri učitavanju obaveštenja:', error);
+        container.innerHTML = '<p>Trenutno nema obaveštenja.</p>';
+    }
+});
+</script>
+
+        <p class="arhiva-link"><a href="obavestenja.html">Прикажи сва обавештења →</a></p>
+    </section>
+
+	<section class="galerija">
+    <h2 class="section-title">Наша зграда</h2>
+    <div class="galerija-grid">
+        <figure>
+            <img src="slike/ulaz.jpg" alt="Главни улаз у зграду">
+            <figcaption>Главни улаз</figcaption>
+        </figure>
+        <figure>
+            <img src="slike/fasada.jpg" alt="Фасада зграде">
+            <figcaption>Фасада</figcaption>
+        </figure>
+        <figure>
+            <img src="slike/dvoriste.jpg" alt="Двориште зграде">
+            <figcaption>Двориште</figcaption>
+        </figure>
+    </div>
+</section>
+	
+    <section class="info-box">
+        <h2>Подаци о стамбеној заједници</h2>
+        <ul>
+            <li><strong>Пословно име:</strong> Стамбена заједница Владислава Бајчевића 7</li>
+            <li><strong>Адреса седишта:</strong> Владислава Бајчевића 7, 11000 Београд – Звездара</li>
+            <li><strong>Матични број:</strong> 17802020</li>
+            <li><strong>ПИБ:</strong> 106987767</li>
+            <li><strong>Датум регистрације:</strong> 30.11.2017.</li>
+            <li><strong>Претежна делатност:</strong> 94.99 – Делатност осталих организација на бази учлањења</li>
+            <li><strong>Управник:</strong> Александар Миловановић (управник – домаће лице)</li>
+            <li><strong>Контакт телефон:</strong> <span class="placeholder">[уписати број]</span></li>
+            <li><strong>Е-пошта:</strong> <span class="placeholder">[уписати адресу]</span></li>
+        </ul>
+        <p class="napomena">Подаци преузети из Јединствене евиденције стамбених заједница Републичког геодетског завода.</p>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Стамбена заједница Владислава Бајчевића 7. Сва права задржана.</p>
+        <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
+    </div>
+</footer>
+
+</body>
+</html>

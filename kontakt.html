@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакт – СЗ Владислава Бајчевића 7</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
+        <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="index.html">Почетна</a></li>
+            <li><a href="o-zgradi.html">О згради</a></li>
+            <li><a href="obavestenja.html">Обавештења</a></li>
+            <li><a href="dokumenta.html">Документа</a></li>
+            <li><a href="finansije.html">Финансије</a></li>
+            <li><a href="kontakt.html" class="active">Контакт</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+
+    <h2 class="section-title">Контакт</h2>
+
+    <section class="info-box">
+        <h2>Управа стамбене заједнице</h2>
+        <ul>
+            <li><strong>Управник:</strong> Александар Миловановић</li>
+            <li><strong>Врста управника:</strong> Управник – домаће лице</li>
+            <li><strong>Контакт телефон:</strong> <a href="tel:+381600000000"><span class="placeholder">[уписати број]</span></a></li>
+            <li><strong>Е-пошта:</strong> <a href="mailto:sz.vladislava.bajcevica7@gmail.com">sz.vladislava.bajcevica7@gmail.com</a></li>
+            <li><strong>Пријем станара:</strong> <span class="placeholder">[дан и време, нпр. среда 18–20 ч]</span></li>
+        </ul>
+    </section>
+
+    <section class="info-box">
+        <h2>Адреса</h2>
+        <ul>
+            <li><strong>Седиште:</strong> Владислава Бајчевића 7, 11000 Београд – Звездара</li>
+            <li><strong>Општина:</strong> Звездара</li>
+            <li><strong>Насеље:</strong> Миријево</li>
+        </ul>
+    </section>
+
+    <section class="info-box">
+        <h2>Регистрациони подаци</h2>
+        <ul>
+            <li><strong>Пословно име:</strong> Стамбена заједница Владислава Бајчевића 7</li>
+            <li><strong>Матични број:</strong> 17802020</li>
+            <li><strong>ПИБ:</strong> 106987767</li>
+            <li><strong>Датум регистрације:</strong> 30.11.2017.</li>
+            <li><strong>Претежна делатност:</strong> 94.99 – Делатност осталих организација на бази учлањења</li>
+            <li><strong>Евиденција:</strong> Јединствена евиденција стамбених заједница – РГЗ</li>
+        </ul>
+    </section>
+
+    <section class="info-box">
+        <h2>Хитне службе</h2>
+        <ul>
+            <li><strong>Хитна помоћ:</strong> <a href="tel:194">194</a></li>
+            <li><strong>Полиција:</strong> <a href="tel:192">192</a></li>
+            <li><strong>Ватрогасци:</strong> <a href="tel:193">193</a></li>
+            <li><strong>Хитне интервенције у водоводу (БВК):</strong> <a href="tel:0113606606">011/3606-606</a></li>
+            <li><strong>Електродистрибуција (квари):</strong> <a href="tel:0113604500">011/3604-500</a></li>
+            <li><strong>Градска стамбена инспекција:</strong> <a href="tel:0113309000">011/3309-000</a></li>
+        </ul>
+    </section>
+
+    <section class="info-box">
+        <h2>Пошаљите поруку управи</h2>
+        <p>Попуните форму и управник ће вам одговорити у року од неколико дана.</p>
+
+        <!--
+        ══════════════════════════════════════════════════════════════
+        ФОРМА преко Formspree сервиса (бесплатан план до 50 порука/месец):
+        1. Идите на https://formspree.io → Sign up (бесплатан налог)
+        2. Направите нови форм → копирајте "Endpoint URL" (нпр. https://formspree.io/f/xyzabcd)
+        3. У наставку замените YOUR_FORMSPREE_ID вашим ID-ом
+        ══════════════════════════════════════════════════════════════
+        -->
+
+        <form class="kontakt-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+            <label for="ime">Ваше име</label>
+            <input type="text" id="ime" name="ime" required>
+
+            <label for="stan">Број стана (опционо)</label>
+            <input type="text" id="stan" name="stan">
+
+            <label for="email">Е-пошта (за одговор)</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="poruka">Порука</label>
+            <textarea id="poruka" name="poruka" required></textarea>
+
+            <button type="submit">Пошаљи поруку</button>
+        </form>
+
+        <p class="napomena"><em>Форма користи Formspree – бесплатан сервис за пријем порука без сервера. Потребно је направити бесплатан налог на <a href="https://formspree.io" target="_blank" rel="noopener">formspree.io</a> и заменити <code>YOUR_FORMSPREE_ID</code> у коду изнад.</em></p>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Стамбена заједница Владислава Бајчевића 7.</p>
+        <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
+    </div>
+</footer>
+
+</body>
+</html>
