@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обавештења – СЗ Владислава Бајчевића 7</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
-        <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+    <div class="container header-content">
+        <img src="logo.svg" alt="Логотип СЗ Владислава Бајчевића 7" class="logo">
+        <div class="header-text">
+            <h1>Стамбена заједница<br>Владислава Бајчевића 7</h1>
+            <p class="location">Београд · Звездара · Владислава Бајчевића 7</p>
+        </div>
     </div>
 </header>
 
@@ -32,38 +36,122 @@
 
     <h2 class="section-title">Сва обавештења</h2>
 
-    <article class="obavestenje">
-        <h3>Обавештење о редовном одржавању</h3>
-        <p class="datum">15. октобар 2026.</p>
-        <p>Обавештавамо станаре да ће се у суботу, 18.10.2026. године, вршити редовно чишћење заједничких просторија и провера хидрантске мреже. Молимо за разумевање и омогућавање приступа.</p>
-    </article>
-
-    <article class="obavestenje">
-        <h3>Позив на скупштину станара</h3>
-        <p class="datum">01. октобар 2026.</p>
-        <p>Сазива се скупштина станара за 10.10.2026. године у 18 часова у приземљу зграде. Дневни ред: усвајање плана одржавања за 2027. годину и разматрање предлога за санацију крова.</p>
-    </article>
-
-    <!--
-    ══════════════════════════════════════════════════════════════
-    НОВО ОБАВЕШТЕЊЕ — копирајте блок испод и замените текст:
-
-    <article class="obavestenje">
-        <h3>Наслов обавештења</h3>
-        <p class="datum">ДД. месец ГГГГ.</p>
-        <p>Текст обавештења...</p>
-    </article>
-    ══════════════════════════════════════════════════════════════
-    -->
+    <div id="lista-obavestenja">
+        <p class="ucitavanje">Учитавање обавештења…</p>
+    </div>
 
 </main>
 
 <footer>
     <div class="container">
-        <p>© 2026 Стамбена заједница Владислава Бајчевића 7.</p>
+        <p>© 2026 Стамбена заједница Владислава Бајчевића 7. Сва права задржана.</p>
         <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
     </div>
 </footer>
+
+<script>
+const GITHUB_REPO = "szvb7/szvb7.github.io";
+const GITHUB_BRANCH = "main";
+const CONTENT_FOLDER = "content/obavestenja";
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('lista-obavestenja');
+    if (!container) return;
+
+    try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${CONTENT_FOLDER}?ref=${GITHUB_BRANCH}`;
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        const fajlovi = await response.json();
+        const mdFajlovi = fajlovi.filter(f => f.name.endsWith('.md'));
+
+        if (mdFajlovi.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        const obavestenja = [];
+
+        for (const fajl of mdFajlovi) {
+            const rawResponse = await fetch(fajl.download_url);
+            const tekst = await rawResponse.text();
+            const parsed = parsirajMarkdown(tekst);
+            if (parsed && parsed.naslov) {
+                obavestenja.push(parsed);
+            }
+        }
+
+        obavestenja.sort((a, b) => {
+            const da = new Date(a.datum || 0);
+            const db = new Date(b.datum || 0);
+            return db - da;
+        });
+
+        if (obavestenja.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        obavestenja.forEach(ob => {
+            const article = document.createElement('article');
+            article.className = 'obavestenje';
+
+            const datumPrikaz = ob.datum
+                ? new Date(ob.datum).toLocaleDateString('sr-RS', { day: 'numeric', month: 'long', year: 'numeric' })
+                : '';
+
+            article.innerHTML = `
+                <h3>${escapeHtml(ob.naslov)}</h3>
+                ${datumPrikaz ? `<p class="datum">${datumPrikaz}</p>` : ''}
+                <div class="tekst-obavestenja">${formatirajTekst(ob.tekst)}</div>
+            `;
+            container.appendChild(article);
+        });
+
+    } catch (error) {
+        console.error('Грешка при учитавању обавештења:', error);
+        container.innerHTML = '<p class="ucitavanje">Тренутно није могуће учитати обавештења.</p>';
+    }
+});
+
+function parsirajMarkdown(tekst) {
+    const match = tekst.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    if (!match) return null;
+    const meta = match[1];
+    const telo = match[2].trim();
+    const naslovMatch = meta.match(/^title:\s*["']?(.*?)["']?\s*$/m);
+    const datumMatch = meta.match(/^date:\s*["']?(.*?)["']?\s*$/m);
+    return {
+        naslov: naslovMatch ? naslovMatch[1] : null,
+        datum: datumMatch ? datumMatch[1] : null,
+        tekst: telo
+    };
+}
+
+function formatirajTekst(tekst) {
+    if (!tekst) return '';
+    let html = escapeHtml(tekst);
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/(^|[^*])\*([^*\n]+?)\*/g, '$1<em>$2</em>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="slika-u-obavestenju">');
+    const pasusi = html.split(/\n{2,}/);
+    return pasusi.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
 
 </body>
 </html>
