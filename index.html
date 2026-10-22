@@ -6,7 +6,7 @@
     <meta name="description" content="Званична страница Стамбене заједнице Владислава Бајчевића 7, Београд – Звездара.">
     <title>Стамбена заједница Владислава Бајчевића 7</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
 
@@ -42,87 +42,12 @@
 
     <section>
         <h2 class="section-title">Најновија обавештења</h2>
-
-        <section>
-    <h2 class="section-title">Најновија обавештења</h2>
-    <div id="lista-obavestenja"></div>
-    <p class="arhiva-link"><a href="obavestenja.html">Прикажи сва обавештења →</a></p>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    const container = document.getElementById('lista-obavestenja');
-    if (!container) return;
-
-    try {
-        // Uzimamo listu fajlova iz fascikle content/obavestenja
-        // Napomena: Ovo je pojednostavljen primer. Za produkciju je bolje koristiti
-        // build proces ili API. Ali za mali broj obaveštenja, možemo ručno da listamo.
-        // Idealno bi bilo koristiti fetch na manifest fajl koji CMS generiše.
-        // Za sada, pretpostavljamo da imamo nekoliko fajlova.
-        // U praksi, bolje je koristiti statički generator (poput Eleventyja) ili
-        // ručno ažurirati listu fajlova u JS-u.
-        
-        // Ovaj deo je najbolje zameniti statičkim generatorom.
-        // Za potrebe ovog vodiča, pretpostavićemo da ste ručno dodali listu fajlova.
-        const fajlovi = [
-            'content/obavestenja/2026-10-15-odrzavanje.md',
-            'content/obavestenja/2026-10-01-skupstina.md'
-        ];
-
-        for (const fajl of fajlovi) {
-            const response = await fetch(fajl);
-            const tekst = await response.text();
-            
-            // Jednostavan parser za Markdown (naslov, datum, telo)
-            const delovi = tekst.split('---');
-            if (delovi.length >= 3) {
-                const meta = delovi[1];
-                const telo = delovi[2].trim();
-                
-                const naslovMatch = meta.match(/title:\s*(.*)/);
-                const datumMatch = meta.match(/date:\s*(.*)/);
-                
-                if (naslovMatch && datumMatch) {
-                    const article = document.createElement('article');
-                    article.className = 'obavestenje';
-                    article.innerHTML = `
-                        <h3>${naslovMatch[1]}</h3>
-                        <p class="datum">${new Date(datumMatch[1]).toLocaleDateString('sr-RS')}</p>
-                        <p>${telo.substring(0, 200)}...</p>
-                    `;
-                    container.appendChild(article);
-                }
-            }
-        }
-    } catch (error) {
-        console.error('Greška pri učitavanju obaveštenja:', error);
-        container.innerHTML = '<p>Trenutno nema obaveštenja.</p>';
-    }
-});
-</script>
-
+        <div id="lista-obavestenja">
+            <p class="ucitavanje">Учитавање обавештења…</p>
+        </div>
         <p class="arhiva-link"><a href="obavestenja.html">Прикажи сва обавештења →</a></p>
     </section>
 
-	<section class="galerija">
-    <h2 class="section-title">Наша зграда</h2>
-    <div class="galerija-grid">
-        <figure>
-            <img src="slike/ulaz.jpg" alt="Главни улаз у зграду">
-            <figcaption>Главни улаз</figcaption>
-        </figure>
-        <figure>
-            <img src="slike/fasada.jpg" alt="Фасада зграде">
-            <figcaption>Фасада</figcaption>
-        </figure>
-        <figure>
-            <img src="slike/dvoriste.jpg" alt="Двориште зграде">
-            <figcaption>Двориште</figcaption>
-        </figure>
-    </div>
-</section>
-	
     <section class="info-box">
         <h2>Подаци о стамбеној заједници</h2>
         <ul>
@@ -133,8 +58,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             <li><strong>Датум регистрације:</strong> 30.11.2017.</li>
             <li><strong>Претежна делатност:</strong> 94.99 – Делатност осталих организација на бази учлањења</li>
             <li><strong>Управник:</strong> Александар Миловановић (управник – домаће лице)</li>
-            <li><strong>Контакт телефон:</strong> <span class="placeholder">[уписати број]</span></li>
-            <li><strong>Е-пошта:</strong> <span class="placeholder">[уписати адресу]</span></li>
         </ul>
         <p class="napomena">Подаци преузети из Јединствене евиденције стамбених заједница Републичког геодетског завода.</p>
     </section>
@@ -147,6 +70,114 @@ document.addEventListener('DOMContentLoaded', async () => {
         <p class="small">Матични број: 17802020 · ПИБ: 106987767</p>
     </div>
 </footer>
+
+<script>
+const GITHUB_REPO = "szvb7/szvb7.github.io";
+const GITHUB_BRANCH = "main";
+const CONTENT_FOLDER = "content/obavestenja";
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('lista-obavestenja');
+    if (!container) return;
+
+    try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${CONTENT_FOLDER}?ref=${GITHUB_BRANCH}`;
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        const fajlovi = await response.json();
+        const mdFajlovi = fajlovi.filter(f => f.name.endsWith('.md'));
+
+        if (mdFajlovi.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        const obavestenja = [];
+
+        for (const fajl of mdFajlovi) {
+            const rawResponse = await fetch(fajl.download_url);
+            const tekst = await rawResponse.text();
+            const parsed = parsirajMarkdown(tekst);
+            if (parsed && parsed.naslov) {
+                obavestenja.push(parsed);
+            }
+        }
+
+        // Sortiranje po datumu (najnovije prvo)
+        obavestenja.sort((a, b) => {
+            const da = new Date(a.datum || 0);
+            const db = new Date(b.datum || 0);
+            return db - da;
+        });
+
+        // Prikazujemo samo prvih 5 na početnoj
+        const zaPrikaz = obavestenja.slice(0, 5);
+
+        if (zaPrikaz.length === 0) {
+            container.innerHTML = '<p class="ucitavanje">Тренутно нема обавештења.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        zaPrikaz.forEach(ob => {
+            const article = document.createElement('article');
+            article.className = 'obavestenje';
+
+            const datumPrikaz = ob.datum
+                ? new Date(ob.datum).toLocaleDateString('sr-RS', { day: 'numeric', month: 'long', year: 'numeric' })
+                : '';
+
+            article.innerHTML = `
+                <h3>${escapeHtml(ob.naslov)}</h3>
+                ${datumPrikaz ? `<p class="datum">${datumPrikaz}</p>` : ''}
+                <div class="tekst-obavestenja">${formatirajTekst(ob.tekst)}</div>
+            `;
+            container.appendChild(article);
+        });
+
+    } catch (error) {
+        console.error('Грешка при учитавању обавештења:', error);
+        container.innerHTML = '<p class="ucitavanje">Тренутно није могуће учитати обавештења.</p>';
+    }
+});
+
+function parsirajMarkdown(tekst) {
+    const match = tekst.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    if (!match) return null;
+    const meta = match[1];
+    const telo = match[2].trim();
+    const naslovMatch = meta.match(/^title:\s*["']?(.*?)["']?\s*$/m);
+    const datumMatch = meta.match(/^date:\s*["']?(.*?)["']?\s*$/m);
+    return {
+        naslov: naslovMatch ? naslovMatch[1] : null,
+        datum: datumMatch ? datumMatch[1] : null,
+        tekst: telo
+    };
+}
+
+function formatirajTekst(tekst) {
+    if (!tekst) return '';
+    let html = escapeHtml(tekst);
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/(^|[^*])\*([^*\n]+?)\*/g, '$1<em>$2</em>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="slika-u-obavestenju">');
+    const pasusi = html.split(/\n{2,}/);
+    return pasusi.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
 
 </body>
 </html>
