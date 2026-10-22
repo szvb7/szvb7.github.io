@@ -3,8 +3,8 @@ backend:
   repo: szvb7/szvb7.github.io
   branch: main
 
-media_folder: "slike" # Gde se čuvaju slike otpremljene kroz CMS
-public_folder: "/slike" # Kako se putanja do slika prikazuje na sajtu
+media_folder: "slike"
+public_folder: "/slike"
 
 collections:
   - name: "obavestenja"
@@ -16,3 +16,34 @@ collections:
       - { label: "Наслов", name: "title", widget: "string" }
       - { label: "Датум", name: "date", widget: "datetime" }
       - { label: "Текст обавештења", name: "body", widget: "markdown" }
+
+  - name: "dokumenti"
+    label: "Документа"
+    folder: "content/dokumenti"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Назив документа", name: "title", widget: "string" }
+      - label: "Категорија"
+        name: "kategorija"
+        widget: "select"
+        options:
+          - "Решења регистратора"
+          - "Општа документа"
+          - "Записници са скупштина"
+          - "Финансијски извештаји"
+      - { label: "Датум", name: "date", widget: "datetime", required: false }
+      - { label: "PDF фајл", name: "fajl", widget: "file" }
+      - { label: "Напомена (опционо)", name: "napomena", widget: "string", required: false }
+
+  - name: "finansije"
+    label: "Финансије"
+    folder: "content/finansije"
+    create: true
+    slug: "{{year}}-{{month}}-izvestaj"
+    fields:
+      - { label: "Месец и година (нпр. Октобар 2026)", name: "title", widget: "string" }
+      - { label: "Укупно приходи (RSD)", name: "prihodi", widget: "number", value_type: "int" }
+      - { label: "Укупно расходи (RSD)", name: "rashodi", widget: "number", value_type: "int" }
+      - { label: "Стање на рачуну на крају месеца (RSD)", name: "stanje", widget: "number", value_type: "int" }
+      - { label: "Кратак опис (опционо)", name: "opis", widget: "text", required: false }
