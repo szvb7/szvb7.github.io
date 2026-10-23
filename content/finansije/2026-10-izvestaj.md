@@ -1,7 +1,7 @@
 ---
 title: Октобар 2026
-prihodi: 15500
-rashodi: 12000
-stanje: 4575641
-opis: у кешу имамо још.... 156800
+prihodi: 99999
+rashodi: 88888
+stanje: 123456789
+opis: у кешу имамо још.... 100100 RSD
 ---
